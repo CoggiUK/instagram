@@ -1,3 +1,5 @@
+package com.example.instagram;
+
 public class Account{
     String userName;
     String passWord;
@@ -14,4 +16,3 @@ public class Account{
         return passWord;
     }
 }
-
