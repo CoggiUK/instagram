@@ -1,6 +1,8 @@
 package com.example.instagram;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -8,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.List;
 
 public class Home extends AppCompatActivity {
 
@@ -26,5 +30,14 @@ public class Home extends AppCompatActivity {
         String data = getIntent().getStringExtra("userName");
         textView.setText(data);
     }
+        Bundle extra = getIntent().getExtras();
+        String username = extra.getString("UserName","");
+        String password = extra.getString("Password","");
+        List<Integer> test = extra.getIntegerArrayList("ListAge");
+        Uri uri = getIntent().getData();
+        Log.d("TAG",username);
+        Log.d("TAG1",password);
+        Log.d("ListAge",test.get(2).toString());
+        Log.d("data",uri.toString());
     }
 }

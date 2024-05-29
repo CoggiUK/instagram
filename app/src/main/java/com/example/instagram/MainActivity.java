@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         Button button = (Button)  findViewById(R.id.Login);
         EditText mEditUsername = findViewById(R.id.Username);
         EditText mPassword = findViewById(R.id.password);
-        Intent intent = new Intent(MainActivity.this, Home.class);
         List<Account> accounts = new ArrayList<>();
         accounts.add(new Account("admin", "123456"));
         accounts.add(new Account("user1", "123456"));
@@ -79,11 +78,23 @@ public class MainActivity extends AppCompatActivity {
 //                    Intent intent = new Intent(MainActivity.this, Home.class);
 //                    intent.putExtra("userName", username);
 //                    startActivity(intent);
+
                 } else {
                     Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                 }
 
+                Intent intent = new Intent(MainActivity.this, Home.class);
+                List<Integer> test = new ArrayList<>();
+                test.add(1);
+                test.add(2);
+                test.add(3);
+                test.add(4);
 
+                intent.setData(Uri.parse("https://www.google.com"));
+                intent.putExtra("username",username);
+                intent.putExtra("password",password);
+                intent.putIntegerArrayListExtra("ListAge",(ArrayList<Integer>) test );
+                startActivity(intent);
             }
         });
     }
