@@ -1,6 +1,9 @@
 package com.example.instagram;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Button button = (Button)  findViewById(R.id.Login);
         EditText mEditUsername = findViewById(R.id.Username);
         EditText mPassword = findViewById(R.id.password);
+        Intent intent = new Intent(MainActivity.this, Home.class);
         List<Account> accounts = new ArrayList<>();
         accounts.add(new Account("admin", "123456"));
         accounts.add(new Account("user1", "123456"));
@@ -57,9 +61,28 @@ public class MainActivity extends AppCompatActivity {
 
                 if (loginSuccess) {
                     Toast.makeText(MainActivity.this, "Login successfully", Toast.LENGTH_SHORT).show();
+//                    Intent i = new Intent(MainActivity.this,Home.class);
+//                    startActivity(i);
+
+//                    Intent read1 = new Intent();
+//                    read1.setAction(Intent.ACTION_VIEW);
+//                    read1.setData(ContactsContract.Contacts.CONTENT_URI);
+//                    startActivity(read1);
+
+//                    Uri uri = Uri.parse("https://www.facebook.com/");
+//                    Intent it = new Intent(Intent.ACTION_VIEW,uri);
+//                    startActivity(it);
+
+//                    Uri uri = Uri.parse("tel:0974149916");
+//                    Intent it = new Intent(Intent.ACTION_DIAL,uri);
+//                    startActivity(it);
+//                    Intent intent = new Intent(MainActivity.this, Home.class);
+//                    intent.putExtra("userName", username);
+//                    startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                 }
+
 
             }
         });
