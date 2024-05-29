@@ -31,8 +31,8 @@ public class Home extends AppCompatActivity {
         textView.setText(data);
     }
         Bundle extra = getIntent().getExtras();
-        String username = extra.getString("UserName","");
-        String password = extra.getString("Password","");
+        String username = extra.getString("username","");
+        String password = extra.getString("password","");
         List<Integer> test = extra.getIntegerArrayList("ListAge");
         Uri uri = getIntent().getData();
         Log.d("TAG",username);

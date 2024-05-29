@@ -1,15 +1,22 @@
 package com.example.instagram;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -22,6 +29,19 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     private String username, password;
 
+    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getResultCode()== Activity.RESULT_OK){
+                        Intent data = result.getData();
+                        String usernameReturn = data.getExtras().getString("username");
+                        Log.d("username",usernameReturn);
+                }
+            }
+}
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("password",password);
                 intent.putIntegerArrayListExtra("ListAge",(ArrayList<Integer>) test );
                 startActivity(intent);
+
+
             }
         });
     }
