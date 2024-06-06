@@ -2,9 +2,7 @@ package com.example.instagram;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +13,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -24,23 +21,25 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private String username, password;
+    private EditText mEditUsername, mPassword;
 
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode()== Activity.RESULT_OK){
+                    if(result.getResultCode() == Activity.RESULT_OK){
                         Intent data = result.getData();
-                        String usernameReturn = data.getExtras().getString("username");
-                        Log.d("username",usernameReturn);
+                        if (data != null && data.getExtras() != null) {
+                            String usernameReturn = data.getExtras().getString("username");
+                            Log.d("username", usernameReturn);
+                        }
+                    }
                 }
             }
-}
     );
 
     @Override
@@ -53,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Button button = (Button)  findViewById(R.id.Login);
-        EditText mEditUsername = findViewById(R.id.Username);
-        EditText mPassword = findViewById(R.id.password);
+
+        Button button = findViewById(R.id.Login);
+        mEditUsername = findViewById(R.id.Username);
+        mPassword = findViewById(R.id.password);
         List<Account> accounts = new ArrayList<>();
         accounts.add(new Account("admin", "123456"));
         accounts.add(new Account("user1", "123456"));
@@ -79,45 +79,25 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (loginSuccess) {
-                    Toast.makeText(MainActivity.this, "Login successfully", Toast.LENGTH_SHORT).show();
-//                    Intent i = new Intent(MainActivity.this,Home.class);
-//                    startActivity(i);
-
-//                    Intent read1 = new Intent();
-//                    read1.setAction(Intent.ACTION_VIEW);
-//                    read1.setData(ContactsContract.Contacts.CONTENT_URI);
-//                    startActivity(read1);
-
-//                    Uri uri = Uri.parse("https://www.facebook.com/");
-//                    Intent it = new Intent(Intent.ACTION_VIEW,uri);
-//                    startActivity(it);
-
-//                    Uri uri = Uri.parse("tel:0974149916");
-//                    Intent it = new Intent(Intent.ACTION_DIAL,uri);
-//                    startActivity(it);
-//                    Intent intent = new Intent(MainActivity.this, Home.class);
-//                    intent.putExtra("userName", username);
-//                    startActivity(intent);
-
+                    Toast.makeText(LoginActivity.this, "Login successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, Home.class);
+                    intent.putExtra("userName", username);
+                    someActivityResultLauncher.launch(intent);
                 } else {
-                    Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                 }
-
-                Intent intent = new Intent(MainActivity.this, Home.class);
-                List<Integer> test = new ArrayList<>();
-                test.add(1);
-                test.add(2);
-                test.add(3);
-                test.add(4);
-
-                intent.setData(Uri.parse("https://www.google.com"));
-                intent.putExtra("username",username);
-                intent.putExtra("password",password);
-                intent.putIntegerArrayListExtra("ListAge",(ArrayList<Integer>) test );
-                startActivity(intent);
-
-
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        clearInputFields();
+    }
+
+    private void clearInputFields() {
+        mEditUsername.setText("");
+        mPassword.setText("");
     }
 }

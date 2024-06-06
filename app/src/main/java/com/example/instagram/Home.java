@@ -1,8 +1,10 @@
 package com.example.instagram;
 
-import android.net.Uri;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -10,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import java.util.List;
 
 public class Home extends AppCompatActivity {
 
@@ -25,19 +25,22 @@ public class Home extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         TextView textView = findViewById(R.id.Test);
-    if(getIntent() != null){
-        String data = getIntent().getStringExtra("userName");
-        textView.setText(data);
-    }
-        Bundle extra = getIntent().getExtras();
-        String username = extra.getString("username","");
-        String password = extra.getString("password","");
-        List<Integer> test = extra.getIntegerArrayList("ListAge");
-        Uri uri = getIntent().getData();
-        Log.d("TAG",username);
-        Log.d("TAG1",password);
-        Log.d("ListAge",test.get(2).toString());
-        Log.d("data",uri.toString());
+        if(getIntent() != null){
+            String data = getIntent().getStringExtra("userName");
+            textView.setText(data);
+        }
+
+        Button comback = findViewById(R.id.buttonBack);
+        comback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("username", "Lam");
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        });
     }
 }
